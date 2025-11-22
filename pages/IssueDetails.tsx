@@ -36,7 +36,7 @@ const IssueDetails: React.FC = () => {
   };
 
   return (
-    <div className="p-6 lg:p-8 max-w-7xl mx-auto relative">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-full mx-auto relative">
        <header className="flex flex-wrap items-center justify-between gap-4 mb-6">
            <div>
                <div className="flex items-center gap-3 mb-1">

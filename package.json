@@ -9,10 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react-dom": "^19.2.0",
-    "recharts": "^3.4.1",
+    "@workos-inc/authkit-react": "^0.13.0",
+    "convex": "^1.29.3",
     "react": "^19.2.0",
-    "react-router-dom": "^7.9.6"
+    "react-dom": "^19.2.0",
+    "react-router-dom": "^7.9.6",
+    "recharts": "^3.4.1"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

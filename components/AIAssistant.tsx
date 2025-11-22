@@ -74,11 +74,25 @@ const AIAssistant: React.FC = () => {
     generateResponse(query);
   };
 
+  const clearChat = () => {
+    setMessages([
+      {
+        id: '1',
+        type: 'ai',
+        text: "Hi Alex! I'm your TRP Co-pilot. I can help you draft tenant emails, summarize financial reports, or find maintenance issues. How can I help today?",
+        timestamp: new Date()
+      }
+    ]);
+  };
+
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
-      {/* Chat Window */}
+    <>
+      {/* Chat Window - Fixed positioning independent of button container */}
       {isOpen && (
-        <div className="mb-4 w-full max-w-80 sm:max-w-96 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col h-[500px] animate-fade-in-up">
+        <div
+          className="fixed inset-0 sm:inset-auto sm:bottom-6 sm:right-6 sm:w-96 sm:h-[500px] w-full h-full bg-white dark:bg-gray-800 rounded-none sm:rounded-2xl shadow-2xl border-t sm:border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col animate-fade-in-up z-50"
+          onClick={(e) => e.stopPropagation()}
+        >
           {/* Header */}
           <div className="bg-primary p-4 flex justify-between items-center text-white">
             <div className="flex items-center gap-2">
@@ -92,9 +106,28 @@ const AIAssistant: React.FC = () => {
                 </p>
               </div>
             </div>
-            <button onClick={() => setIsOpen(false)} className="hover:bg-white/20 rounded-full p-1.5" title="Close">
-              <span className="material-symbols-outlined text-sm">close</span>
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  clearChat();
+                }}
+                className="hover:bg-white/20 rounded-full p-2.5"
+                title="Clear chat history"
+              >
+                <span className="material-symbols-outlined text-lg">delete_sweep</span>
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsOpen(false);
+                }}
+                className="hover:bg-white/20 rounded-full p-1.5"
+                title="Close"
+              >
+                <span className="material-symbols-outlined text-sm">close</span>
+              </button>
+            </div>
           </div>
 
           {/* Messages */}
@@ -149,18 +182,20 @@ const AIAssistant: React.FC = () => {
         </div>
       )}
 
-      {/* Toggle Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="group flex items-center justify-center size-14 bg-primary hover:bg-primary/90 text-white rounded-full shadow-xl transition-all hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-primary/30"
-      >
-        {isOpen ? (
-          <span className="material-symbols-outlined text-2xl">expand_more</span>
-        ) : (
+      {/* Toggle Button - Fixed positioning, only shown when chat is closed */}
+      {!isOpen && (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsOpen(true);
+          }}
+          className="fixed bottom-6 right-6 z-50 group flex items-center justify-center size-14 bg-primary hover:bg-primary/90 text-white rounded-full shadow-xl transition-all hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-primary/30"
+          aria-label="Open AI Assistant"
+        >
           <span className="material-symbols-outlined text-2xl fill">chat</span>
-        )}
-      </button>
-    </div>
+        </button>
+      )}
+    </>
   );
 };
 

@@ -1,0 +1,10 @@
+{
+  "authorizationHeader": "Authorization",
+  "functions": {
+    "dir": "convex"
+  },
+  "npm": {
+    "dev": "npm run dev",
+    "build": "npm run build"
+  }
+}

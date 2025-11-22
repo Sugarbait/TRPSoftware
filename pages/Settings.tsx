@@ -51,8 +51,15 @@ const Settings: React.FC = () => {
     fileInputRef.current?.click();
   };
 
+  const handleLogout = async () => {
+    // WorkOS handles logout through their API
+    // Redirect to WorkOS logout endpoint
+    window.location.href = 'https://api.workos.com/logout';
+  };
+
   const tabs = [
     { id: 'profile', label: 'My Profile', icon: 'person' },
+    { id: 'security', label: 'Security & MFA', icon: 'security' },
     { id: 'notifications', label: 'Notifications', icon: 'notifications' },
     { id: 'appearance', label: 'Appearance', icon: 'palette' },
     { id: 'ai', label: 'AI & Automation', icon: 'auto_awesome' },
@@ -131,13 +138,136 @@ const Settings: React.FC = () => {
                 </div>
                 <div className="mt-8 flex justify-between items-center border-t border-gray-200 dark:border-gray-700 pt-6">
                   <button
-                    onClick={() => navigate('/login')}
+                    onClick={handleLogout}
                     className="flex items-center gap-2 px-4 py-2.5 text-red-600 font-bold hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20 rounded-lg transition-colors"
                   >
                     <span className="material-symbols-outlined">logout</span>
                     Sign Out
                   </button>
                   <button className="px-6 py-2.5 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors">Save Changes</button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Security & MFA Settings */}
+          {activeTab === 'security' && (
+            <div className="space-y-6 animate-fade-in">
+              {/* MFA Configuration */}
+              <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="material-symbols-outlined text-primary text-2xl">vpn_key</span>
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">Multi-Factor Authentication (MFA)</h2>
+                </div>
+
+                <p className="text-gray-600 dark:text-gray-400 mb-6">
+                  Add an extra layer of security to your account. When enabled, you'll be required to provide a second form of verification when signing in.
+                </p>
+
+                <div className="space-y-4">
+                  {/* TOTP Section */}
+                  <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-start gap-3">
+                        <div className="p-2.5 bg-blue-100 dark:bg-blue-900/30 rounded-lg mt-0.5">
+                          <span className="material-symbols-outlined text-blue-600 dark:text-blue-400">smartphone</span>
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-gray-900 dark:text-white mb-1">Authenticator App</h3>
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                            Use an authenticator app like Google Authenticator, Authy, or Microsoft Authenticator to generate time-based codes.
+                          </p>
+                          <p className="text-xs text-gray-500">Status: <span className="text-gray-900 dark:text-gray-200 font-medium">Not Configured</span></p>
+                        </div>
+                      </div>
+                      <button className="px-4 py-2 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors whitespace-nowrap">
+                        Set Up
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* SMS Section */}
+                  <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-start gap-3">
+                        <div className="p-2.5 bg-green-100 dark:bg-green-900/30 rounded-lg mt-0.5">
+                          <span className="material-symbols-outlined text-green-600 dark:text-green-400">sms</span>
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-gray-900 dark:text-white mb-1">Text Message (SMS)</h3>
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                            Receive verification codes via SMS to your phone number.
+                          </p>
+                          <p className="text-xs text-gray-500">Status: <span className="text-gray-900 dark:text-gray-200 font-medium">Not Configured</span></p>
+                        </div>
+                      </div>
+                      <button className="px-4 py-2 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors whitespace-nowrap">
+                        Set Up
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Backup Codes Section */}
+                  <div className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-900/30">
+                    <div className="flex items-start justify-between">
+                      <div className="flex items-start gap-3">
+                        <div className="p-2.5 bg-amber-100 dark:bg-amber-900/30 rounded-lg mt-0.5">
+                          <span className="material-symbols-outlined text-amber-600 dark:text-amber-400">bookmark</span>
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-gray-900 dark:text-white mb-1">Backup Codes</h3>
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                            Save backup codes to access your account if you lose access to your MFA device. Keep them in a safe place.
+                          </p>
+                          <p className="text-xs text-gray-500">Status: <span className="text-gray-900 dark:text-gray-200 font-medium">Available after setting up TOTP or SMS</span></p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Password Management */}
+              <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="material-symbols-outlined text-primary text-2xl">lock</span>
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">Password Management</h2>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <p className="text-gray-600 dark:text-gray-400 mb-4">
+                      Update your password regularly to maintain account security.
+                    </p>
+                    <button className="px-6 py-2.5 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-colors">
+                      Change Password
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Session Management */}
+              <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="material-symbols-outlined text-primary text-2xl">devices</span>
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">Active Sessions</h2>
+                </div>
+
+                <p className="text-gray-600 dark:text-gray-400 mb-6">
+                  Manage your active sessions across different devices.
+                </p>
+
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-4 border border-gray-200 dark:border-gray-700 rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <span className="material-symbols-outlined text-gray-400">desktop_mac</span>
+                      <div>
+                        <p className="font-medium text-gray-900 dark:text-white">Current Session</p>
+                        <p className="text-sm text-gray-500">Last active: Just now</p>
+                      </div>
+                    </div>
+                    <span className="px-2.5 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">Active</span>
+                  </div>
                 </div>
               </div>
             </div>

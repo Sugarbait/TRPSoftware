@@ -5,7 +5,7 @@ const IssueLog: React.FC = () => {
   const navigate = useNavigate();
   
   return (
-    <div className="p-8 max-w-4xl mx-auto">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-full mx-auto">
        {/* Breadcrumb */}
        <div className="flex items-center gap-2 text-sm text-gray-500 mb-6">
         <span className="hover:text-primary cursor-pointer">TRP Software</span>
@@ -96,7 +96,7 @@ const IssueLog: React.FC = () => {
                  <div>
                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Voice Note</label>
                      <div className="flex items-center gap-4 p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700/30">
-                         <button className="p-3 bg-red-600 text-white rounded-full hover:bg-red-700 shadow-sm">
+                         <button className="w-10 h-10 flex items-center justify-center bg-red-600 text-white rounded-full hover:bg-red-700 shadow-sm">
                              <span className="material-symbols-outlined">mic</span>
                          </button>
                          <div>
